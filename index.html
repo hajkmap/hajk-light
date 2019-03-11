@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Hajk3 light</title>
+    <script src="hajk-light.js"></script>
+  </head>
+  <body>
+    <h1>How to use Hajk light</h1>
+    <p>
+      <ol>
+        <li>Setup a map in regular Hajk just the way you want it to look when embedded. Show relevant layers, pan to relevant location, pick a zoom level that suits your needs.</li>
+        <li>Using Anchor plugin, get relevant query parameters, e.g. <code>m=bl&x=109540.43517945363&y=6284671.775522817&z=5&l=58</code>.</li>
+        <li>Make edits to the page where you want to embed Hajk light. Necessary changes are as follow:
+          <ol>
+            <li>In your pages <code>head</code>, load script, e.g. <code><pre>&lt;script src="app.js"&gt;&lt;/script&gt;</pre></code></li>
+            <li>Make sure that you have a <code>&lt;div id="map"&gt;&lt;/div&gt;</code> somewhere on the page. This element will hold the map. You can pick any ID, default is <code>map</code>.</li>
+            <li>At the end of page, just before closing <code>&lt;/body&gt;</code> tag, place a snippet that looks something like this (replace with your own settings):</li>
+          </ol>
+        </li>
+      </ol>
+      <code>
+        <pre>
+            &lt;script&gt;
+              document.Hajk({
+                injectToDOMelementWithId: "map", // ID of the element that we will inject our map to. It _must_ exist in DOM when script loads.
+                urlToMapservice:
+                  "https://interntestkarta.halmstad.se/utiltest/proxy/geturl/https://interntestkarta.halmstad.se/mapservicetest/", // URL to running mapservice. Can be with our without proxy.
+                queryParams: "m=bl&x=109540.43517945363&y=6284671.775522817&z=5&l=58" // Query params from the Anchor plugin in regular Hajk edition
+              });
+            &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <h1>Demo</h1>
+    <p>Below is a quick demo that on successful loads displays the title of map config.</p>
+    <!-- START OF SNIPPET THAT YOU NEED TO PLACE ON YOUR OWN PAGE. DON'T FORGET TO CHANGE THE SETTINGS!-->
+    <div id="map"></div>
+    <script>
+      document.Hajk({
+        injectToDOMelementWithId: "map", // ID of the element that we will inject our map to. It _must_ exist in DOM when script loads.
+        urlToMapservice:
+          "https://interntestkarta.halmstad.se/utiltest/proxy/geturl/https://interntestkarta.halmstad.se/mapservicetest/", // URL to running mapservice. Can be with our without proxy.
+        queryParams: "m=bl&x=109540.43517945363&y=6284671.775522817&z=5&l=58" // Query params from the Anchor plugin in regular Hajk edition
+      });
+    </script>
+    <!-- END OF SNIPPET -->
+  </body>
+</html>

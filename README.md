@@ -6,13 +6,13 @@ Light version of Hajk, suitable for embedding.
 
 In `<head>`:
 
-```
+```HTML
 <script src="hajk-light.js"></script>
 ```
 
 In `<body>`:
 
-```
+```HTML
 <div id="map"></div>
 <script>
   document.Hajk({

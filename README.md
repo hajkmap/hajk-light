@@ -4,6 +4,8 @@ Light version of Hajk, suitable for embedding.
 
 # Quick start
 
+_Note that you need a running Hajk (at least the mapservice component, but a working client and admin are recommended to make setup as easy as possible). Please refer to [this repo](https://github.com/hajkmap/Hajk) for Hajk installation details._
+
 In `<head>`:
 
 ```HTML

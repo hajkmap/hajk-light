@@ -49,18 +49,20 @@ async function Hajk(settings) {
   }
 
   function injectMap() {
-    // Retrieve map title from previously fetched config object
-    let titleText = mapConfig.map.title
-      ? mapConfig.map.title
-      : "[No title specified in map config]";
+    let mapEl = c.injectToDOMelementWithId || "map";
 
-    let mapEl = document.getElementById(c.injectToDOMelementWithId);
-
-    // TODO: Replace all this "show title code" with real code that creates the OL map
-    let span = document.createElement("span");
-    let headingText = document.createTextNode(titleText);
-    span.appendChild(headingText);
-    mapEl.appendChild(span);
+    var map = new ol.Map({
+      target: mapEl,
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        })
+      ],
+      view: new ol.View({
+        center: ol.proj.fromLonLat([37.41, 8.82]),
+        zoom: 4
+      })
+    });
   }
 
   /**

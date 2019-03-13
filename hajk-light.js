@@ -1,6 +1,6 @@
 async function Hajk(settings) {
   // Define some global config objects
-  let c = {},
+  let config = {},
     layersConfig,
     mapConfig;
 
@@ -18,7 +18,7 @@ async function Hajk(settings) {
     const z = searchParams.get("z");
     const l = searchParams.get("l");
 
-    c = {
+    config = {
       injectToDOMelementWithId,
       urlToMapservice,
       m,
@@ -36,8 +36,8 @@ async function Hajk(settings) {
 
   async function fetchAll() {
     let urls = [
-      `${c.urlToMapservice}config/layers`,
-      `${c.urlToMapservice}config/${c.m}`
+      `${config.urlToMapservice}config/layers`,
+      `${config.urlToMapservice}config/${config.m}`
     ];
 
     await Promise.all(
@@ -48,19 +48,49 @@ async function Hajk(settings) {
     });
   }
 
+  /**
+   * Loops through layer IDs specified in the "l" parameter. Creates a
+   * valid OL Layer object for each layer. Returns an array, ready to be
+   * supplied to ol.Map() later on.
+   */
+
+  function getLayers() {
+    let allLayers = [];
+    config.l.split(",").forEach(id => {
+      // TODO: Similar for all other layer types
+      let layer = layersConfig.wmslayers.find(match => match.id === id);
+      console.log(layer);
+
+      allLayers.push(
+        new ol.layer.Tile({
+          extent: mapConfig.map.extent,
+          source: new ol.source.TileWMS({
+            url: layer.url,
+            params: { LAYERS: layer.layers.join(), TILED: layer.tiled },
+            serverType: "geoserver",
+            transition: 0
+          })
+        })
+      );
+    });
+    return allLayers;
+  }
+
   function injectMap() {
-    let mapEl = c.injectToDOMelementWithId || "map";
+    let mapEl = config.injectToDOMelementWithId || "map";
+    const mapProjection = mapConfig.projections.find(
+      p => p.code === mapConfig.map.projection
+    );
+    proj4.defs(mapProjection.code, mapProjection.definition);
+    ol.proj.proj4.register(proj4);
 
     var map = new ol.Map({
       target: mapEl,
-      layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
-        })
-      ],
+      layers: getLayers(),
       view: new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 4
+        center: ol.proj.fromLonLat([config.x / 10000, config.y / 100000]),
+        zoom: config.z,
+        projection: ol.proj.get(mapProjection.code)
       })
     });
   }
@@ -71,7 +101,12 @@ async function Hajk(settings) {
 
   parseConfig(settings);
   await fetchAll();
-  // console.log(layersConfig, mapConfig);
+
+  console.log("config: ", config);
+  console.log("mapConfig: ", mapConfig);
+  console.log("layersConfig: ", layersConfig);
+  console.log("ol: ", ol);
+
   injectMap();
 }
 

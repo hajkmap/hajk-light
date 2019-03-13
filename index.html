@@ -3,6 +3,7 @@
     <title>Hajk3 light</title>
     <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
     <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.5.0/proj4.js"></script>
     <script src="hajk-light.js"></script>
   </head>
   <body>
@@ -26,7 +27,7 @@
                 injectToDOMelementWithId: "map", // ID of the element that we will inject our map to. It _must_ exist in DOM when script loads.
                 urlToMapservice:
                   "https://interntestkarta.halmstad.se/utiltest/proxy/geturl/https://interntestkarta.halmstad.se/mapservicetest/", // URL to running mapservice. Can be with our without proxy.
-                queryParams: "m=bl&x=109540.43517945363&y=6284671.775522817&z=5&l=58" // Query params from the Anchor plugin in regular Hajk edition
+                queryParams: "m=bl?x=109190.9765625&y=6284213.312499999&z=3&l=58,188" // Query params from the Anchor plugin in regular Hajk edition
               });
             &lt;/script&gt;
         </pre>
@@ -41,7 +42,7 @@
         injectToDOMelementWithId: "map", // ID of the element that we will inject our map to. It _must_ exist in DOM when script loads.
         urlToMapservice:
           "https://interntestkarta.halmstad.se/utiltest/proxy/geturl/https://interntestkarta.halmstad.se/mapservicetest/", // URL to running mapservice. Can be with our without proxy.
-        queryParams: "m=bl&x=109540.43517945363&y=6284671.775522817&z=5&l=58" // Query params from the Anchor plugin in regular Hajk edition
+        queryParams: "m=bl?x=109190.9765625&y=6284213.312499999&z=3&l=58,188" // Query params from the Anchor plugin in regular Hajk edition
       });
     </script>
     <!-- END OF SNIPPET -->
